@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Based Egg Fertility Detector — EVOTECH Projects</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1E1E1E;
+      --muted: #080808;
+      --primary: #3b3b3b;
+      --accent: #141413;
+      --card: #f6f7f8;
+      --card-border: #e8eaed;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    [data-theme="dark"]{
+      --bg: #121212;
+      --text: #F5F5F5;
+      --muted: #c9c9c9;
+      --primary: #4E9F3D;
+      --accent: #FFC947;
+      --card: #1c1c1c;
+      --card-border: #2a2a2a;
+      --shadow: 0 10px 30px rgba(0,0,0,.5);
+    }
+    * {box-sizing: border-box;}
+    body {margin:0; padding:0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); transition: background .3s, color .3s;}
+    a {text-decoration: none; color: inherit;}
+    .container {width: min(1200px, 92%); margin: 0 auto; padding: 40px 0;}
+    h1,h2,h3 {margin:0;}
+    h1 {font-size: clamp(28px,5vw,48px); font-weight:900; margin-bottom:16px;}
+    h2.section-title {font-size: clamp(26px,3.6vw,38px); margin-bottom:12px; font-weight:900;}
+    p {margin-bottom:14px; line-height:1.5; color: var(--muted);}
+    ul {margin-left:20px; margin-bottom:20px;}
+    li {margin-bottom:8px;}
+
+    /* HEADER */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+    header .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1200px, 92%);
+      margin: auto;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    nav a {
+      margin-left: 20px;
+      font-weight: 500;
+      color: var(--text);
+      transition: color .3s;
+    }
+    nav a:hover {color: var(--primary);}
+    .theme-toggle {
+      border: none;
+      background: var(--accent);
+      color: #000;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background .3s;
+    }
+    .theme-toggle:hover {background: var(--primary); color: #fff;}
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color:#fff; 
+      padding:80px 20px; 
+      text-align:center; 
+      border-radius:18px; 
+      box-shadow: var(--shadow); 
+      background-size: 300% 300%;
+      animation: gradientBG 12s ease infinite;
+    }
+    @keyframes gradientBG{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+    .hero:hover {transform: translateY(-4px) scale(1.02);}
+    .hero h1 {color:#fff;}
+    .hero p {color:#fff; font-size:1.2rem;}
+    .hero img {width:100%; max-width:600px; border-radius:18px; transition: transform .3s ease;}
+    .hero img:hover {transform: scale(1.05) rotate(1deg);}
+
+    /* Buttons */
+    .back-btn {
+      display:inline-block; padding:10px 18px; margin-bottom:20px; border-radius:14px; 
+      background: var(--bg); border:1px solid var(--card-border); font-weight:700; 
+      transition: transform .2s ease, box-shadow .25s ease, background .3s ease;
+    }
+    .back-btn:hover {
+      transform: translateY(-2px); 
+      box-shadow:0 8px 20px rgba(78,159,61,.35);
+      background: color-mix(in srgb, var(--accent) 20%, var(--bg));
+    }
+
+    /* Cards */
+    .feature-cards {display: flex; flex-wrap: wrap; gap:24px; margin-top:20px; justify-content:center;}
+    .feature-card {
+      flex:1; min-width:220px; padding:20px; background: var(--card); border-radius:18px; 
+      border:1px solid var(--card-border); box-shadow: var(--shadow); text-align:center; 
+      transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+      opacity:0; transform: translateY(20px);
+    }
+    .feature-card.visible {opacity:1; transform:translateY(0);}
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.05); 
+      box-shadow: 0 25px 40px rgba(78,159,61,.25); 
+      background: color-mix(in srgb, var(--accent) 12%, var(--card));
+    }
+    .feature-card .icon {
+      width:48px; height:48px; font-size:24px; display:grid; place-items:center; margin:0 auto 12px; border-radius:12px; 
+      background: linear-gradient(135deg, var(--accent), var(--primary)); color:#fff; 
+    }
+     /* Team */
+    /* --- TEAM PHOTO & CARD HOVER ANIMATION --- */
+.team-photo {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 36px rgba(78,159,61,0.18), 0 2px 12px rgba(0,0,0,0.12);
+  object-fit: cover;
+  transition:
+    transform 0.45s cubic-bezier(.4,1.4,.6,1),
+    box-shadow 0.45s,
+    filter 0.32s,
+    border-color 0.32s,
+    background 0.32s;
+  border: 5px solid var(--card-border);
+  background: linear-gradient(135deg, var(--primary) 60%, var(--accent) 100%);
+  padding: 2px;
+  position: relative;
+  z-index: 1;
+  will-change: transform, box-shadow, filter;
+}
+.card.reveal:hover .team-photo {
+  transform: scale(1.18) rotate(-7deg);
+  box-shadow: 0 24px 64px 0 rgba(78,159,61,0.28), 0 8px 32px rgba(0,0,0,0.18);
+  filter: brightness(1.12) saturate(1.25) drop-shadow(0 0 12px var(--accent));
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--accent) 60%, var(--primary) 100%);
+  animation: pulseGlow 1.1s;
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 8px 36px rgba(78,159,61,0.18), 0 2px 12px rgba(0,0,0,0.12);}
+  60% { box-shadow: 0 32px 80px 0 rgba(255,201,71,0.28), 0 12px 40px rgba(0,0,0,0.18);}
+  100% { box-shadow: 0 24px 64px 0 rgba(78,159,61,0.28), 0 8px 32px rgba(0,0,0,0.18);}
+}
+.card.reveal {
+  transition: box-shadow 0.35s, transform 0.35s, background 0.35s;
+  background: var(--card);
+  border-radius: 26px;
+  box-shadow: 0 8px 32px rgba(78,159,61,0.09);
+  border: 1.5px solid var(--card-border);
+  position: relative;
+  overflow: hidden;
+}
+.card.reveal:hover {
+  background: linear-gradient(120deg, var(--card) 80%, var(--accent) 20%);
+  box-shadow: 0 28px 64px rgba(78,159,61,0.22), 0 8px 24px rgba(0,0,0,0.13);
+  transform: translateY(-10px) scale(1.045) rotate(-1deg);
+  animation: cardFloat 0.7s;
+}
+@keyframes cardFloat {
+  0% { transform: translateY(0) scale(1) rotate(0);}
+  60% { transform: translateY(-16px) scale(1.07) rotate(-2deg);}
+  100% { transform: translateY(-10px) scale(1.045) rotate(-1deg);}
+}
+.card.reveal::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 90px; height: 90px;
+  background: radial-gradient(circle at 60% 40%, var(--accent) 60%, transparent 100%);
+  opacity: 0.13;
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.card.reveal:hover::after {
+  opacity: 0.22;
+}
+.card.reveal h3 {
+  font-weight: 800;
+  font-size: 1.22rem;
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+  color: var(--primary);
+  transition: color 0.22s, text-shadow 0.22s;
+  position: relative;
+  z-index: 1;
+}
+.card.reveal:hover h3 {
+  color: var(--accent);
+  text-shadow: 0 2px 12px rgba(255,201,71,0.18);
+}
+.card.reveal p, .card.reveal div {
+  position: relative;
+  z-index: 1;
+}
+    /* Contact Card */
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 36px 48px 32px 48px; /* Increased left/right padding */
+      max-width: 100%;             /* Increased max-width */
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 1s cubic-bezier(.23,1.01,.32,1) both;
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+    .contact-card:before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle at 60% 40%, var(--accent) 60%, transparent 100%);
+      opacity: 0.18;
+      z-index: 0;
+    }
+    .contact-card h2, .contact-card p { position: relative; z-index: 1;}
+    .contact-card form { position: relative; z-index: 1;}
+    .contact-icon {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      width: 54px; height: 54px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin: 0 auto 18px auto;
+      box-shadow: 0 4px 18px rgba(78,159,61,.13);
+    }
+    .field {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      padding: 6px 10px;
+      margin-bottom: 10px;
+      transition: box-shadow .2s;
+    }
+    .field:focus-within {
+      box-shadow: 0 0 0 4px color-mix(in srgb,var(--primary) 18%,transparent);
+      border-color: var(--primary);
+    }
+    .field label {
+      min-width: 60px;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .field input, .field textarea {
+      border: none;
+      background: transparent;
+      outline: none;
+      color: var(--text);
+      font-size: 1rem;
+      flex: 1;
+      padding: 10px 0;
+    }
+    .field input::placeholder, .field textarea::placeholder {
+      color: var(--muted);
+      opacity: .8;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      width: 100%;
+      margin-top: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(78,159,61,.13);
+      transition: background .2s, transform .2s;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      transform: translateY(-2px) scale(1.03);
+    }
+    .contact-success {
+      display: none;
+      background: color-mix(in srgb, var(--primary) 15%, var(--card));
+      color: var(--primary);
+      border-radius: 10px;
+      padding: 12px 0;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 14px;
+      animation: fadeIn .7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+
+    /* Fix navigation scroll issue: ensure headings are visible below sticky header */
+section,
+#team,
+#contact {
+  scroll-margin-top: 70px;
+}
+
+    /* FOOTER */
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--card-border);
+      padding: 30px 0;
+      margin-top: 60px;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer a {color: var(--primary);}
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-content">
+    <h1 style="color: rgb(2, 175, 255); font-family: 'Times New Roman', Times, serif;font-size: 20px;">EVO <span style="color: #000;">TECH</span></h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#">Projects</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="website1.html" class="back-btn">← Back to Projects</a>
+
+  <!-- HERO -->
+  <div class="hero" style="height:450px;">
+    <h1>Smart Curing Belt</h1>
+    <p>Introducing new gen construction material with the combination of sensors embedded with IoT.</p>
+    <img src="civillo.png" alt="Egg Fertility Detector" style="height: 200px; width: 300px;">
+  </div>
+
+  <!-- CONTENT -->
+  <section style="margin-top:40px;">
+    <h2 class="section-title">Project Overview</h2>
+    <p>The Automated Smart Curing Belt is an IoT-enabled system that optimizes concrete column and beam curing through integrated temperature and moisture sensors, ensuring consistent quality with real-time monitoring, automation, and remote control via mobile and web applications.This innovation reduces labor requirements, enhances structural durability, and streamlines workflows for large-scale construction projects..</p>
+
+    <h2 class="section-title">Key Features</h2>
+    <div class="feature-cards">
+      <div class="feature-card"><div class="icon">🤖</div><h3>Precision Monitoring</h3><p>Integrated sensors measure temperature and moisture in real-time, ensuring ideal curing conditions for concrete structures.</p></div>
+      <div class="feature-card"><div class="icon">📡</div><h3>Automated Control</h3><p>The system automatically adjusts curing parameters, reducing manual errors and maintaining consistent quality across surfaces.</p></div>
+      <div class="feature-card"><div class="icon">⚡</div><h3>Remote Accessibility</h3><p>Mobile and web-based platforms allow users to monitor and control curing processes from any location.</p></div>
+      <div class="feature-card"><div class="icon">📊</div><h3>Cost & Time Efficiency</h3><p>Minimizes labor requirements, shortens project timelines, and optimizes resource usage for better profitability.</p></div>
+    </div>
+  </section><br>
+  <!-- About the Project -->
+  <section>
+    <h2 class="section-title">About the Project</h2>
+    <p>Concrete curing is a critical process that directly impacts the strength and durability of structures.Traditional curing methods often face challenges such as uneven moisture distribution, poor temperature control, and high labor dependency.The Automated Smart Curing Belt addresses these issues by integrating advanced temperature and moisture sensors within a flexible belt design.It uses IoT technology to transmit real-time environmental data to a mobile app and web interface for instant access and control.Automation ensures precise, uniform curing regardless of environmental changes, enhancing concrete performance.This solution significantly reduces manual intervention, leading to lower labor costs and faster project completion.By improving quality and efficiency, the system offers a sustainable and scalable approach for modern construction. </p>
+  
+  </section>
+  <!-- TEAM -->
+   
+<section id="team">
+  <div class="container">
+    <h2 class="section-title">Meet the Team</h2>
+    <p class="section-sub">Passionate minds behind EVOTECH's innovation.</p>
+    <div class="grid-3">
+      <div class="card reveal" style="text-align:center">
+        <img src="saro.jpg" alt="Saravanan C" class="team-photo">
+        <h3>Saravanan C</h3>
+        <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Founder & CEO</div>
+        <p style="font-size:15px">leading the vision and strategy of Evo Tech.</p>
+      </div><br>
+      <div class="card reveal" style="text-align:center">
+        <img src="" alt="Harharan N" class="team-photo">
+        <h3>HariHaran N</h3>
+        <div style="color:var(--muted); font-size:15px; margin-bottom:8px">AIML Engineer & Lead</div>
+        <p style="font-size:15px">Advancing AI solutions and overseeing software strategy at Evotech.</p>
+      </div><br>
+      <div class="card reveal" style="text-align:center">
+        <img src="vasanth.jpg" alt="Vasanth Kumar K" class="team-photo">
+        <h3>Vasanth Kumar K</h3>
+        <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Hardware Engineer & Lead</div>
+        <p style="font-size:15px">leading the design and development of hardware solutions at Evotech.</p>
+      </div><br>
+      <div class="card reveal" style="text-align:center">
+        <img src="lalitha1.jpg" alt="Lalitha Shree A K" class="team-photo">
+        <h3>Lalitha Shree A K</h3>
+        <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Designer & Tech Assist</div>
+        <p style="font-size:15px">crafting designs and supporting technology operations at Evotech.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-card">
+        <div class="contact-icon">📬</div>
+        <h2 class="section-title" style="text-align:center;">Contact Us</h2>
+        <p class="section-sub" style="text-align:center;">Reach out to discuss projects, collaborations, or a demo.</p>
+        <div class="contact-success" id="contact-success">Thank you! We'll get back to you soon.</div>
+        <form id="contact-form" autocomplete="off">
+          <div class="field"><label for="name">👤</label><input id="name" type="text" placeholder="Your Name" required></div>
+          <div class="field"><label for="email">✉️</label><input id="email" type="email" placeholder="Your Email" required></div>
+          <div class="field"><label for="message">💬</label><textarea id="message" rows="3" placeholder="Your Message" required></textarea></div>
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <p>📧 Email: <a href="mailto:
+    evo.tech.pvt07@gmail.com">evo.tech.pvt07@gmail.com</a> | 📞 Phone: +91-9876543210</p>
+  <p>© 2025 EVOTECH. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // Theme toggle
+  function toggleTheme(){
+    const html = document.documentElement;
+    html.setAttribute("data-theme", html.getAttribute("data-theme") === "light" ? "dark" : "light");
+  }
+
+  // Animate cards on scroll
+  const cards = document.querySelectorAll('.feature-card');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.2});
+  cards.forEach(card => observer.observe(card));
+
+  // Contact form fake submit
+  document.getElementById('contact-form').onsubmit = function(e){
+    e.preventDefault();
+    document.getElementById('contact-success').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('contact-success').style.display = 'none';
+      document.getElementById('contact-form').reset();
+    }, 2500);
+  }
+</script>
+
+</body>
+</html>

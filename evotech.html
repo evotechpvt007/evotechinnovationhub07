@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EVOTECH — Innovating for Better Food & Farms</title>
+  <meta name="description" content="EVOTECH: building ethical, AI-powered solutions for poultry and agri supply chains." />
+
+  <!-- INTERNAL CSS -->
+  <style>
+    :root{
+      --bg:#0b0e13;         /* page background */
+      --card:#0f141c;       /* card background */
+      --muted:#9aa3af;      /* muted text */
+      --text:#e6ebf2;       /* main text */
+      --brand:#4f46e5;      /* primary */
+      --brand-2:#22d3ee;    /* accent */
+      --good:#10b981;       /* success */
+      --warn:#f59e0b;       /* warning */
+      --danger:#ef4444;     /* danger */
+      --ring: 0 0 0 3px rgba(79,70,229,.25);
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --shadow-sm: 0 6px 18px rgba(0,0,0,.25);
+      --grid-max: 1200px;
+    }
+
+    /* CSS Reset + base */
+    *,*::before,*::after{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text); background: var(--bg);
+      line-height:1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    a{ color:inherit; text-decoration:none }
+    img{ max-width:100%; display:block }
+    button{ font: inherit }
+
+    /* Layout helpers */
+    .container{ width:100%; max-width: var(--grid-max); margin-inline:auto; padding: 0 20px }
+    .grid{ display:grid; gap:24px }
+    .grid-2{ grid-template-columns: repeat(2, minmax(0,1fr)) }
+    .grid-3{ grid-template-columns: repeat(3, minmax(0,1fr)) }
+    .grid-4{ grid-template-columns: repeat(4, minmax(0,1fr)) }
+
+    /* Header / Nav */
+    header{
+      position: sticky; top:0; z-index: 80; backdrop-filter: saturate(180%) blur(10px);
+      background: rgba(11,14,19,.72); border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 0 }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.4px }
+    .logo{
+      width:36px; height:36px; border-radius: 10px; background: conic-gradient(from 180deg at 50% 50%, var(--brand), var(--brand-2), var(--brand));
+      box-shadow: inset 0 0 24px rgba(255,255,255,.08), 0 6px 18px rgba(34,211,238,.25);
+    }
+    .nav-links{ display:flex; align-items:center; gap:20px }
+    .nav-links a{ color: #dbe3f0; font-weight:600; opacity:.9 }
+    .nav-links a:hover{ opacity:1 }
+    .nav-cta{
+      display:flex; align-items:center; gap:10px
+    }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); box-shadow: var(--shadow-sm); color: #f3f6fb; font-weight:700 }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 12px 24px rgba(0,0,0,.35) }
+    .btn.primary{ border-color: transparent; background: linear-gradient(90deg, var(--brand), var(--brand-2)); color:#071018 }
+
+    /* Mobile menu */
+    .hamburger{ display:none; width:42px; height:42px; border-radius:12px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); place-content:center }
+    .hamburger span{ width:18px; height:2px; background:#fff; display:block; position:relative }
+    .hamburger span::before,.hamburger span::after{ content:""; position:absolute; left:0; width:100%; height:2px; background:#fff; }
+    .hamburger span::before{ top:-6px } .hamburger span::after{ top:6px }
+    .mobile-panel{ display:none; padding:16px; border-top:1px solid rgba(255,255,255,.08) }
+    .mobile-panel a{ display:block; padding:12px 6px; color:#dbe3f0; border-radius:10px }
+    .mobile-panel a:hover{ background: rgba(255,255,255,.04) }
+
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; isolation:isolate;
+      background:
+        radial-gradient(60rem 40rem at 80% -10%, rgba(79,70,229,.25), transparent 60%),
+        radial-gradient(50rem 30rem at 0% 0%, rgba(34,211,238,.18), transparent 60%);
+    }
+    .hero .container{ padding: 80px 20px 48px }
+    .eyebrow{ display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background: rgba(79,70,229,.12); color:#c7c9ff; font-weight:700; letter-spacing:.2px }
+    .eyebrow svg{ width:16px; height:16px }
+    h1.hero-title{ font-size: clamp(32px, 6.5vw, 60px); line-height:1.05; margin: 14px 0; letter-spacing:.2px }
+    .hero-sub{ color: var(--muted); font-size: clamp(15px, 2.8vw, 18px); max-width: 780px }
+    .hero-cta{ display:flex; gap:12px; margin-top:24px }
+
+    /* Stats strip */
+    .stats{ display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:16px; padding: 28px 0 60px }
+    .stat{ background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 16px 18px }
+    .stat .num{ font-weight:900; font-size: 26px }
+    .stat .label{ color: var(--muted); font-weight:600 }
+
+    /* Sections */
+    section{ padding: 64px 0; position: relative }
+    .section-title{ font-size: clamp(26px, 3.6vw, 38px); margin: 0 0 12px; font-weight: 900 }
+    .section-sub{ color: var(--muted); margin: 0 0 28px }
+
+    /* Cards */
+    .card{ background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius); box-shadow: var(--shadow); overflow:hidden; display:flex; flex-direction:column }
+    .card .media{ aspect-ratio:16/9; background: linear-gradient(135deg, rgba(79,70,229,.28), rgba(34,211,238,.18)); position:relative }
+    .card .media::after{ content:""; position:absolute; inset:0; background-image: radial-gradient(circle at 30% 20%, rgba(255,255,255,.18) 0 8%, transparent 9%), radial-gradient(circle at 60% 50%, rgba(255,255,255,.10) 0 8%, transparent 9%), radial-gradient(circle at 80% 30%, rgba(255,255,255,.15) 0 7%, transparent 8%); background-size: 80px 80px; mix-blend: screen; opacity:.55 }
+    .card .content{ padding: 16px 16px 18px }
+    .card h3{ margin: 6px 0 6px; font-size: 20px }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; font-weight:700; color:#cde7ff; background: rgba(34,211,238,.12); border: 1px solid rgba(34,211,238,.22); border-radius: 999px; }
+
+    /* Feature rows */
+    .feature{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 34px; align-items:center }
+    .feature .shot{ aspect-ratio: 4/3; border-radius: var(--radius); border:1px solid rgba(255,255,255,.08); background: linear-gradient(120deg, rgba(79,70,229,.22), rgba(34,211,238,.14)); box-shadow: var(--shadow) }
+    .kpis{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-top:18px }
+    .kpi{ padding:12px 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px }
+    .kpi .big{ font-size: 22px; font-weight: 900 }
+
+    /* News carousel */
+    .marquee{ position:relative; overflow:hidden; border-radius: 14px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.03) }
+    .marquee-track{ display:flex; gap:20px; padding: 14px; animation: scroll 28s linear infinite }
+    .chip{ white-space:nowrap; padding:10px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); font-weight:700; color:#d7e6ff }
+    @keyframes scroll{ from{ transform: translateX(0) } to{ transform: translateX(-50%) } }
+
+    /* Footer */
+    footer{ padding: 48px 0 24px; border-top:1px solid rgba(255,255,255,.08); background: linear-gradient(0deg, rgba(255,255,255,.045), transparent) }
+    .footer-grid{ display:grid; grid-template-columns: 1.2fr repeat(4, 1fr); gap:24px }
+    .footer-title{ font-weight:900; margin: 0 0 10px }
+    .footer-links a{ display:block; color:#cfd7e6; opacity:.9; padding:6px 0 }
+    .footer-links a:hover{ opacity:1 }
+    .copyright{ color: var(--muted); font-size: 14px; margin-top: 20px }
+
+    /* Back-to-top */
+    .to-top{ position: fixed; bottom: 22px; right: 22px; display:none; border:none; border-radius: 999px; padding:12px 14px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); color:#071018; font-weight:900; box-shadow: var(--shadow-sm); cursor:pointer }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .grid-3{ grid-template-columns: 1fr 1fr }
+      .grid-4{ grid-template-columns: 1fr 1fr }
+      .feature{ grid-template-columns: 1fr }
+      .stats{ grid-template-columns: 1fr 1fr }
+      .footer-grid{ grid-template-columns: 1fr 1fr 1fr }
+      .nav-links{ display:none }
+      .hamburger{ display:grid }
+      .mobile-panel.open{ display:block }
+    }
+    @media (max-width: 640px){
+      .grid-2{ grid-template-columns: 1fr }
+      .grid-3,.grid-4{ grid-template-columns: 1fr }
+      .footer-grid{ grid-template-columns: 1fr 1fr }
+    }
+    #meet-our-team {
+    padding: 60px 20px;
+    background: #0b0e13;
+    text-align: center;
+  }
+  #meet-our-team h2 {
+    font-size: 2.8em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e6eaee;
+  }
+  #meet-our-team p {
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto 50px;
+    font-size: 1.2em;
+  }
+  .meet-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1500px;
+    margin: auto;
+  }
+  .meet-team-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    background: #000;
+  }
+  .meet-team-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .meet-team-card:hover img {
+    transform: scale(1.08);
+  }
+  .meet-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    transition: opacity 0.4s ease;
+  }
+  .meet-team-card:hover .meet-overlay {
+    opacity: 1;
+  }
+  .meet-overlay h3 {
+    font-size: 1.6em;
+    margin-bottom: 8px;
+  }
+  .meet-overlay p {
+    font-size: 1em;
+    opacity: 0.9;
+  }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header id="header">
+    <div class="container nav">
+      <a href="#home" class="brand">
+        <span class="logo" aria-hidden="true"></span>
+        <span>EVOTECH</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#businesses">Businesses</a>
+        <a href="#innovation">Innovation</a>
+        <a href="#news">News</a>
+        <a href="#sustainability">Sustainability</a>
+        <a href="#careers">Careers</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn" href="#contact">Talk to us</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span></button>
+      </div>
+    </div>
+    <div id="mobilePanel" class="mobile-panel container" aria-label="Mobile">
+      <a href="#about">About</a>
+      <a href="#businesses">Businesses</a>
+      <a href="#innovation">Innovation</a>
+      <a href="#news">News</a>
+      <a href="#sustainability">Sustainability</a>
+      <a href="#careers">Careers</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container">
+      <span class="eyebrow" aria-label="EVOTECH purpose">🚀 Innovating for good</span>
+      <h1 class="hero-title">Technology that makes food systems more ethical, efficient, and future‑ready.</h1>
+      <p class="hero-sub">From AI‑powered egg fertility prediction to intelligent farm logistics, EVOTECH builds products that reduce waste, boost yields, and respect animal welfare.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#businesses">Explore our work</a>
+        <a class="btn" href="#innovation">See our tech</a>
+      </div>
+
+      <div class="stats container">
+        <div class="stat"><div class="num">3+</div><div class="label">Product lines</div></div>
+        <div class="stat"><div class="num">15%</div><div class="label">Waste reduction (pilot)</div></div>
+        <div class="stat"><div class="num">4</div><div class="label">Partner farms</div></div>
+        <div class="stat"><div class="num">2025</div><div class="label">Founded</div></div>
+      </div>
+
+      <div class="marquee" aria-label="Latest">
+        <div class="marquee-track" id="marqueeTrack">
+          <span class="chip">EVOSCAN v1 ships to early partners</span>
+          <span class="chip">Announcing seed cohort with AgriLab</span>
+          <span class="chip">Paper accepted at Agri-AI Summit</span>
+          <span class="chip">Pilot shows 15% reduction in culling</span>
+          <span class="chip">Hiring ML + Embedded engineers</span>
+          <!-- clones appended via JS for seamless loop -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About EVOTECH</h2>
+      <p class="section-sub">We are a deep‑tech company building humane, data‑driven products for poultry and agriculture. Our mission is to create value across the supply chain while reducing environmental impact.</p>
+      <div class="feature">
+        <div>
+          <h3>Purpose beyond profit</h3>
+          <p>We design with ethics in mind — prioritising animal welfare and sustainability alongside performance.</p>
+          <div class="kpis">
+            <div class="kpi"><div class="big">80%+</div><div>inference on‑edge</div></div>
+            <div class="kpi"><div class="big"><span aria-hidden="true">⚡</span> Low‑latency</div><div>&lt;120ms predict</div></div>
+            <div class="kpi"><div class="big">ISO</div><div>compliant flows</div></div>
+          </div>
+        </div>
+        <div class="shot" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Businesses -->
+  <section id="businesses">
+    <div class="container">
+      <h2 class="section-title">Our Businesses</h2>
+      <p class="section-sub">We operate across AI hardware, software platforms, and services that help farms modernise safely.</p>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <span class="pill">EQUIPMENT</span>
+            <h3>EVOSCAN™ — Automated Egg Scanner</h3>
+            <p>Inline, high‑throughput egg fertility scanner (day‑3 candling) with on‑edge AI for real‑time sorting.</p>
+            <a class="btn" href="#contact">Request a demo →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <span class="pill">SOFTWARE</span>
+            <h3>EVOCLOUD — Farm Intelligence</h3>
+            <p>Dashboards, model management, and analytics. Secure telemetry from devices, alerts, and yield forecasts.</p>
+            <a class="btn" href="#innovation">Learn more →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <span class="pill">SERVICES</span>
+            <h3>AI‑as‑a‑Service</h3>
+            <p>Custom datasets, on‑prem deployments, and integration with your existing conveyors and QC flows.</p>
+            <a class="btn" href="#contact">Talk to sales →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Innovation -->
+  <section id="innovation">
+    <div class="container">
+      <h2 class="section-title">Innovation & Technology</h2>
+      <p class="section-sub">Proprietary imaging, robust ML pipelines, and reliable embedded systems — designed for the factory floor.</p>
+
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <h3>Imaging</h3>
+            <p>High‑CRI LEDs + optical isolation yield clean candling images. Optional ultrasound add‑on for research.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <h3>Models</h3>
+            <p>Transfer learning with compact CNNs for on‑edge inference. Confidence scoring and drift alerts built‑in.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <h3>Systems</h3>
+            <p>Raspberry Pi/Jetson class devices with hardened OS images, OTA updates, and safety interlocks.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- News / Stories (carousel-like chips already above) + cards here -->
+  <section id="news">
+    <div class="container">
+      <h2 class="section-title">Latest Stories</h2>
+      <p class="section-sub">Updates from our labs, partners, and pilots.</p>
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <h3>Pilot with Sunrise Farms</h3>
+            <p>Our inline sorter successfully processed 10,000 eggs/day with &gt;94% classification agreement.</p>
+            <a class="btn" href="#">Read more →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <h3>R&D: Confidence Metrics</h3>
+            <p>We open‑sourced a reference implementation for calibrated confidence to flag uncertain eggs.</p>
+            <a class="btn" href="#">Read more →</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="media"></div>
+          <div class="content">
+            <h3>Manufacturing Partner</h3>
+            <p>Signed an MoU with a precision sheet‑metal shop to accelerate EVOSCAN v1 assemblies.</p>
+            <a class="btn" href="#">Read more →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sustainability -->
+  <section id="sustainability">
+    <div class="container">
+      <h2 class="section-title">Sustainability & Impact</h2>
+      <p class="section-sub">Less waste, better welfare, and traceable outcomes.</p>
+      <div class="grid grid-3">
+        <div class="kpi card" style="padding:18px">
+          <div class="big">15% less waste</div>
+          <div>By early sorting and discard avoidance during incubation.</div>
+        </div>
+        <div class="kpi card" style="padding:18px">
+          <div class="big">CO₂ savings</div>
+          <div>Lower power per egg via efficient imaging + optimized conveyors.</div>
+        </div>
+        <div class="kpi card" style="padding:18px">
+          <div class="big">Ethical outcomes</div>
+          <div>Helps reduce post‑hatch culling practices in poultry supply chains.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Careers -->
+  <section id="careers">
+    <div class="container">
+      <h2 class="section-title">Careers</h2>
+      <p class="section-sub">Join a small, mission‑driven team building real‑world AI + hardware.</p>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="content">
+            <h3>Open Roles</h3>
+            <ul>
+              <li>Machine Learning Engineer (Edge)</li>
+              <li>Embedded Systems Engineer</li>
+              <li>Mechanical Design Engineer</li>
+            </ul>
+            <a class="btn" href="#contact">Apply now →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <h3>Life at EVOTECH</h3>
+            <p>We value learning, shipping, and ownership. Work with modern tools and see your work on a factory line.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- team -->
+   <section id="meet-our-team">
+  <h2>Meet Our Team</h2>
+  <p>Our passionate professionals dedicated to driving innovation at EVOTECH.</p>
+  <div class="meet-team-grid">
+    <div class="meet-team-card">
+      <img src="team1.jpg" alt="John Doe">
+      <div class="meet-overlay">
+        <h3>Saravanan C</h3>
+        <p>Founder</p>
+      </div>
+    </div>
+    <div class="meet-team-card">
+      <img src="ts.jpg" alt="Jane Smith">
+      <div class="meet-overlay">
+        <h3>Jane Smith</h3>
+        <p>AIML Engg. & lead</p>
+      </div>
+    </div>
+    <div class="meet-team-card">
+      <img src="shaja.jpg" alt="Mike Johnson">
+      <div class="meet-overlay">
+        <h3>Shajan Krishnan AD</h3>
+        <p>Hardware Engg. & lead</p>
+      </div>
+    </div>
+    <div class="meet-team-card">
+      <img src="pradees.jpg" alt="Emily Brown">
+      <div class="meet-overlay">
+        <h3>Pradees N</h3>
+        <p>Marketing Head</p>
+      </div>
+    </div>
+    <div class="meet-team-card">
+      <img src="team5.jpg" alt="David Wilson">
+      <div class="meet-overlay">
+        <h3>Divya D</h3>
+        <p>Project Manager</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Have a project or want a demo? Send us a note.</p>
+
+      <div class="grid grid-2">
+        <form class="card" id="contactForm" onsubmit="return false" style="padding:18px">
+          <div class="grid">
+            <label>Name<br><input required name="name" placeholder="Your name" class="input"/></label>
+            <label>Email<br><input required type="email" name="email" placeholder="you@company.com" class="input"/></label>
+            <label>Company<br><input name="company" placeholder="Org / Farm" class="input"/></label>
+            <label>Message<br><textarea required name="message" placeholder="What are you interested in?" class="input" rows="4"></textarea></label>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center; margin-top:12px">
+            <button class="btn primary" type="submit">Send message</button>
+            <span id="formStatus" class="section-sub" style="margin:0"></span>
+          </div>
+        </form>
+        <div class="card" style="padding:18px">
+          <h3>Head Office</h3>
+          <p>EVOTECH Labs<br/>Chennai, India</p>
+          <p>📧 hello@evotech.example</p>
+          <p>🔗 Follow us: @evotech</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="brand"><span class="logo"></span><span>EVOTECH</span></div>
+        <p class="section-sub">Innovating for better food & farms.</p>
+        <form id="newsletter" onsubmit="return false" class="grid" style="grid-template-columns: 1fr auto; gap:10px">
+          <input id="newsEmail" class="input" placeholder="Subscribe to updates" type="email"/>
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+        <div id="newsStatus" class="section-sub"></div>
+      </div>
+      <div>
+        <div class="footer-title">Company</div>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#careers">Careers</a>
+          <a href="#news">News</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Products</div>
+        <div class="footer-links">
+          <a href="#businesses">EVOSCAN</a>
+          <a href="#innovation">EVOCLOUD</a>
+          <a href="#innovation">AI Services</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Resources</div>
+        <div class="footer-links">
+          <a href="#innovation">Docs</a>
+          <a href="#sustainability">Impact</a>
+          <a href="#contact">Support</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-title">Legal</div>
+        <div class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright">© <span id="year"></span> EVOTECH. All rights reserved.</div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <!-- INTERNAL JS -->
+  <script>
+    // Helpers
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    // Header shadow on scroll & back-to-top
+    const header = $('#header');
+    const toTop = $('#toTop');
+    const onScroll = () => {
+      const sc = window.scrollY || document.documentElement.scrollTop;
+      header.style.boxShadow = sc > 12 ? '0 6px 20px rgba(0,0,0,.35)' : 'none';
+      toTop.style.display = sc > 300 ? 'inline-flex' : 'none';
+    };
+    window.addEventListener('scroll', onScroll);
+
+    // Mobile menu toggle
+    const hamburger = $('#hamburger');
+    const mobilePanel = $('#mobilePanel');
+    hamburger.addEventListener('click', () => mobilePanel.classList.toggle('open'));
+
+    // Smooth scroll for in-page links
+    $$('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (!id || id === '#' || !$(id)) return;
+        e.preventDefault();
+        $(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        mobilePanel.classList.remove('open');
+      });
+    });
+
+    // Simple marquee loop clone for seamless scroll
+    const track = $('#marqueeTrack');
+    track.innerHTML += track.innerHTML; // duplicate chips once
+
+    // Contact form (fake submit)
+    const contactForm = $('#contactForm');
+    const formStatus = $('#formStatus');
+    contactForm.addEventListener('submit', () => {
+      const data = Object.fromEntries(new FormData(contactForm).entries());
+      if (!data.name || !data.email || !data.message){
+        formStatus.textContent = 'Please fill all required fields.';
+        formStatus.style.color = '#fca5a5';
+        return;
+      }
+      formStatus.textContent = 'Thanks! We\'ll get back to you soon.';
+      formStatus.style.color = '#a7f3d0';
+      contactForm.reset();
+    });
+
+    // Newsletter (simple email check)
+    $('#newsletter').addEventListener('submit', () => {
+      const email = $('#newsEmail').value.trim();
+      const status = $('#newsStatus');
+      const ok = /.+@.+\..+/.test(email);
+      status.textContent = ok ? 'You\'re subscribed! 🎉' : 'Enter a valid email.';
+      status.style.color = ok ? '#a7f3d0' : '#fca5a5';
+      if (ok) $('#newsEmail').value = '';
+    });
+
+    // Back to top
+    toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // Year
+    $('#year').textContent = new Date().getFullYear();
+
+    // Focus rings for keyboard users only
+    let usingMouse = false;
+    document.addEventListener('mousedown', () => usingMouse = true);
+    document.addEventListener('keydown', () => usingMouse = false);
+    document.addEventListener('focusin', e => {
+      if (!usingMouse && e.target.matches('a, button, input, textarea')){
+        e.target.style.boxShadow = 'var(--ring)';
+      }
+    });
+    document.addEventListener('focusout', e => {
+      if (e.target.matches('a, button, input, textarea')){
+        e.target.style.boxShadow = 'none';
+      }
+    });
+
+    // Provide a nicer default style for inputs
+    $$('input, textarea').forEach(el => {
+      el.classList.add('input');
+    });
+    document.querySelectorAll('.meet-team-card').forEach(card => {
+    card.addEventListener('click', () => {
+      alert(`You clicked on ${card.querySelector('h3').textContent}`);
+    });
+  });
+  </script>
+
+  <style>
+    /* Input styles placed at end so JS-added class applies */
+    .input{
+      width:100%; padding:12px 14px; border-radius: 12px; color: var(--text); background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.12); outline: none; transition: border .2s ease, background .2s ease;
+    }
+    .input:focus{ border-color: rgba(79,70,229,.65); background: rgba(255,255,255,.06); box-shadow: var(--ring) }
+
+  </style>
+</body>
+</html>

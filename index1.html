@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVOTECH — Turning Ideas into Actions</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+  body { background: #0f172a; color: white; overflow-x: hidden; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0ea5e9, #3b82f6, #9333ea);
+    text-align: center; padding: 40px 20px;
+    animation: fadeDown 1s ease-out;
+  }
+  header h1 { font-size: 3rem; letter-spacing: 2px; }
+  header p { font-size: 1.2rem; opacity: 0.9; }
+
+  /* NAVIGATION */
+  nav {
+    display: flex; justify-content: center;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(8px);
+    padding: 12px 0;
+    position: sticky; top: 0; z-index: 10;
+  }
+  nav a {
+    color: white; margin: 0 20px; text-decoration: none;
+    font-weight: bold; position: relative;
+    transition: color 0.3s ease;
+  }
+  nav a::after {
+    content: ''; position: absolute; bottom: -5px; left: 0;
+    width: 0%; height: 3px; background: #38bdf8;
+    transition: width 0.3s ease;
+  }
+  nav a:hover { color: #38bdf8; }
+  nav a:hover::after { width: 100%; }
+
+  /* SECTIONS */
+  section {
+    display: none;
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    animation: fadeUp 0.8s ease;
+  }
+  section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #38bdf8;
+  }
+  section p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  /* HOVER EFFECTS */
+  section:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    margin-top: 40px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+<script>
+  function showProject(projectId) {
+    // Hide all sections
+    document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+    // Show the selected one
+    const selected = document.getElementById(projectId);
+    selected.style.display = "block";
+    selected.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</head>
+<body>
+
+  <header>
+    <h1>EVOTECH</h1>
+    <p>Turning Ideas into Actions</p>
+  </header>
+
+  <nav>
+    <a href="#" onclick="showProject('purifying-belt')">Purifying Belt</a>
+    <a href="#" onclick="showProject('egg-fertility')">Egg Fertility Project</a>
+  </nav>
+
+  <!-- PROJECT SECTIONS -->
+  <section id="purifying-belt">
+    <h2>Purifying Belt Project</h2>
+    <p>
+      The Purifying Belt is a next-gen wearable designed to improve posture, reduce strain,
+      and actively monitor user health metrics. With embedded sensors and AI algorithms,
+      it detects posture issues in real-time and sends gentle haptic feedback to correct it.
+    </p>
+    <p>
+      Beyond posture correction, the belt integrates an air purification module,
+      ensuring fresh and clean breathing air in urban environments.
+    </p>
+  </section>
+
+  <section id="egg-fertility">
+    <h2>Egg Fertility Prediction Project</h2>
+    <p>
+      Our AI-powered Egg Fertility Prediction System allows poultry farms to identify
+      fertile eggs within 3 days of laying using advanced imaging and deep learning.
+      This early detection prevents resource wastage and maximizes hatching efficiency.
+    </p>
+    <p>
+      The solution uses convolutional neural networks (CNNs) to analyze candling
+      images, delivering high accuracy with real-time results.
+    </p>
+  </section>
+
+  <footer>
+    &copy; 2025 EVOTECH — Turning Ideas into Actions
+  </footer>
+
+</body>
+</html>

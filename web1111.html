@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EVOTECH — Agri-Tech & Civil Engineering</title>
+  <meta name="description" content="EVOTECH: Agri-Tech & Civil Engineering Solutions for Smart Farming and Modern Infrastructure">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1E1E1E;
+      --muted: #5a5a5a;
+      --primary: #0390ee;
+      --accent: #1855fa;
+      --card: #f6f7f8;
+      --card-border: #e8eaed;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --transition: all 0.3s ease;
+    }
+    [data-theme="dark"]{
+      --bg: #121212;
+      --text: #F5F5F5;
+      --muted: #c9c9c9;
+      --primary: #16e9d7;
+      --accent: #1855fa;
+      --card: #1c1c1c;
+      --card-border: #2a2a2a;
+      --shadow: 0 10px 30px rgba(0,0,0,.5);
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    html, body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial; background: var(--bg); color: var(--text); scroll-behavior: smooth; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1200px, 92%); margin: 0 auto; }
+
+    /* Header */
+    header { position: sticky; top:0; z-index:100; backdrop-filter: saturate(180%) blur(10px); background: color-mix(in srgb, var(--bg) 86%, transparent); border-bottom:1px solid var(--card-border); }
+    .nav { display:flex; justify-content:space-between; align-items:center; padding:14px 0; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; }
+    .brand-badge { width:36px; height:36px; border-radius:12px; font-weight:900; display:grid; place-items:center; }
+    .nav-links { display:flex; gap:32px; align-items:center; padding:0 18px; }
+    .nav-links a { position:relative; padding:8px 6px; font-weight:600; border-radius:8px; transition: background .18s, color .18s; }
+    .nav-links a::after { content:""; position:absolute; left:50%; bottom:0; width:0; height:3px; background:linear-gradient(90deg, var(--accent), var(--primary)); transition: all 0.25s cubic-bezier(.4,1.4,.6,1); transform:translateX(-50%); border-radius:2px; }
+    .nav-links a:hover::after, .nav-links a.active::after { width:90%; }
+    .nav-links a:hover, .nav-links a.active { background: color-mix(in srgb, var(--accent) 10%, var(--card)); color: var(--primary); }
+    .cta { padding:10px 16px; border-radius:14px; border:1px solid var(--card-border); background:var(--bg); font-weight:700; transition: var(--transition); }
+    .cta:hover { transform:translateY(-2px); box-shadow:0 10px 22px rgba(78,159,61,.25); }
+    .toggle { border:1px solid var(--card-border); background:var(--card); padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600; transition:var(--transition); }
+    .toggle:hover { transform:translateY(-2px); }
+
+    /* Hero */
+    .hero { position:relative; overflow:hidden; }
+    .hero .container { display:grid; grid-template-columns:1.2fr 1fr; gap:40px; padding:84px 0; align-items:center; }
+    @media(max-width:900px){ .hero .container{ grid-template-columns:1fr; padding:56px 0; } }
+    .hero-bg { position:absolute; inset:-30%; background: radial-gradient(65% 45% at 20% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent), radial-gradient(50% 55% at 80% 60%, color-mix(in srgb, var(--primary) 25%, transparent), transparent); animation: floatBg 12s ease-in-out infinite alternate; filter: blur(40px); opacity:0.7; pointer-events:none; }
+    @keyframes floatBg { to{ transform:translateY(-20px) translateX(10px) scale(1.05); } }
+    .h1 { font-size:clamp(34px,5vw,56px); line-height:1.05; margin-bottom:14px; font-weight:900; }
+    .lead { font-size:clamp(16px,2.2vw,20px); color:var(--muted); margin-bottom:22px; }
+    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg, var(--primary), color-mix(in srgb,var(--primary) 50%,#015aff)); color:#fff; border:none; padding:12px 18px; border-radius:14px; font-weight:800; box-shadow:0 12px 24px rgba(78,159,61,.3); transition:var(--transition); }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 16px 30px rgba(78,159,61,.42); }
+    .btn-ghost { padding:12px 16px; border-radius:14px; border:1px dashed var(--card-border); background:transparent; font-weight:700; transition:var(--transition); }
+    .btn-ghost:hover { background:var(--card); transform:translateY(-2px); }
+
+    /* Sections */
+    section { padding:64px 0; position:relative; scroll-margin-top:70px; }
+    .section-title { font-size:clamp(26px,3.6vw,38px); margin-bottom:12px; font-weight:900; }
+    .section-sub { color:var(--muted); margin-bottom:28px; }
+    .grid-3 { display:flex; flex-wrap:wrap; justify-content:center; gap:35px; }
+
+    .card { background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:20px; box-shadow:var(--shadow); transition:var(--transition); cursor:pointer; }
+    .card:hover { transform:translateY(-8px) scale(1.03); box-shadow:0 20px 36px rgba(0,0,0,.12); }
+    .icon { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; margin-bottom:10px; background:linear-gradient(135deg,var(--accent),var(--primary)); font-size:18px; }
+
+    /* Team */
+    .team-photo { width:170px; height:170px; border-radius:50%; margin-bottom:18px; object-fit:cover; box-shadow:0 8px 36px rgba(78,159,61,.18); border:5px solid var(--card-border); background: linear-gradient(135deg, var(--primary), var(--accent)); padding:2px; }
+
+    /* Footer */
+    footer { border-top:1px solid var(--card-border); padding:26px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; background: color-mix(in srgb, var(--card) 80%, var(--bg)); font-size:1.08rem; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logooo"><img src="logo.png" alt=""></div>
+        <h1 style="color: rgb(2, 175, 255); font-family: 'Times New Roman', serif; font-size:20px;">EVO<span style="color:#000">TECH</span></h1>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#tech">Technology</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#testimonials">Clients</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="toggle" id="themeToggle">🌞 / 🌙</button>
+        <a href="#contact" class="cta">Request Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="home" class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div>
+        <h1 class="h1">Turning Ideas Into Actions</h1>
+        <p class="lead">EVOTECH is a forward-thinking <strong>& making more Innovations</strong> based on the problems to be solved. From ideas to impact — EvoTech transforms visions into real-world solutions. We nurture creativity, build startups, and empower the next generation of change-makers.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#contact">Get Started</a>
+          <a class="btn-ghost" href="#tech">See How It Works</a>
+        </div>
+      </div>
+      <div class="about-media">
+        <img src="evologo.png" alt="" class="logoimg">
+      </div>
+    </div>
+  </main>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container about">
+      <div>
+        <h2 class="section-title">About</h2>
+        <p class="section-sub">EvoTech turns bold ideas into real-world innovations. From smart farming to sustainable construction, we deliver tech with purpose.</p>
+      </div>
+      <div class="about-media">
+        <ul>
+          <li>Next-Gen Product Development — From concept to market-ready innovation.</li>
+          <li>Startup Acceleration — Turning prototypes into profitable ventures.</li>
+          <li>Integrated AI & IoT Solutions — Smarter systems for agriculture & infrastructure.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team">
+    <div class="container">
+      <h2 class="section-title">Meet the Team</h2>
+      <p class="section-sub">Passionate minds behind EVOTECH's innovation.</p>
+      <div class="grid-3">
+        <div class="card" style="text-align:center">
+          <img src="saroo.jpg" alt="Saravanan C" class="team-photo">
+          <h3>Saravanan C</h3>
+          <div>Founder & CEO</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <img src="tamil.jpg" alt="Tamilselvan M" class="team-photo">
+          <h3>Tamilselvan M</h3>
+          <div>AIML Engineer & Lead</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <img src="shaja1.jpg" alt="Shajan Krishnan" class="team-photo">
+          <h3>Shajan Krishnan A D</h3>
+          <div>Hardware Engineer & Lead</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology -->
+  <section id="tech">
+    <div class="container">
+      <h2 class="section-title">Our Technology</h2>
+      <div class="grid-3">
+        <div class="card"><div class="icon">🌱</div><h3>Agri Tech</h3></div>
+        <div class="card"><div class="icon">🏗️</div><h3>Civil Engineering</h3></div>
+        <div class="card"><div class="icon">🤖</div><h3>AI & Automation</h3></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">Our Projects</h2>
+      <div class="grid-3">
+        <a href="projectt1.html" class="card project-card">
+          <div class="icon">🌾</div>
+          <h3>AI based Egg Fertility Detection</h3>
+        </a>
+        <a href="project2.html" class="card project-card">
+          <div class="icon">🏢</div>
+          <h3>Smart Curing Belt</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>© 2025 EVOTECH</div>
+    <div class="footer-social">
+      <a href="#">Twitter</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EVOTECH — Agri-Tech & Civil Engineering</title>
+  <meta name="description" content="EVOTECH: Agri-Tech & Civil Engineering Solutions for Smart Farming and Modern Infrastructure">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1E1E1E;
+      --muted: #5a5a5a;
+      --primary: #0390ee;
+      --accent: #1855fa;
+      --card: #f6f7f8;
+      --card-border: #e8eaed;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --transition: all 0.3s ease;
+    }
+    [data-theme="dark"]{
+      --bg: #121212;
+      --text: #F5F5F5;
+      --muted: #c9c9c9;
+      --primary: #16e9d7;
+      --accent: #1855fa;
+      --card: #1c1c1c;
+      --card-border: #2a2a2a;
+      --shadow: 0 10px 30px rgba(0,0,0,.5);
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
+    html, body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial; background: var(--bg); color: var(--text); scroll-behavior: smooth; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1200px, 92%); margin: 0 auto; }
+
+    /* Header */
+    header { position: sticky; top:0; z-index:100; backdrop-filter: saturate(180%) blur(10px); background: color-mix(in srgb, var(--bg) 86%, transparent); border-bottom:1px solid var(--card-border); }
+    .nav { display:flex; justify-content:space-between; align-items:center; padding:14px 0; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:800; }
+    .brand-badge { width:36px; height:36px; border-radius:12px; font-weight:900; display:grid; place-items:center; }
+    .nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  padding: 0 18px;
+}
+
+.nav-links a {
+  position: relative;
+  padding: 8px 6px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  transition: all 0.25s cubic-bezier(.4,1.4,.6,1);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 90%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background: color-mix(in srgb, var(--accent) 10%, var(--card));
+  color: var(--primary);
+}
+
+@media (max-width: 800px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 14px;
+    background: var(--card);
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 18px 24px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    display: none; /* You can toggle this for a mobile menu */
+  }
+}
+    .nav-links a { position:relative; padding:6px 2px; font-weight:600; }
+    .nav-links a::after { content:""; position:absolute; left:50%; bottom:0; width:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--primary)); transition: all 0.25s ease; transform:translateX(-50%); }
+    .nav-links a:hover::after { width:90%; }
+    .cta { padding:10px 16px; border-radius:14px; border:1px solid var(--card-border); background:var(--bg); font-weight:700; transition: var(--transition); }
+    .cta:hover { transform:translateY(-2px); box-shadow:0 10px 22px rgba(78,159,61,.25); }
+    .toggle { border:1px solid var(--card-border); background:var(--card); padding:8px 12px; border-radius:999px; display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-weight:600; transition:var(--transition); }
+    .toggle:hover { transform:translateY(-2px); }
+
+    /* Hero */
+    .hero { position:relative; overflow:hidden; }
+    .hero .container { display:grid; grid-template-columns:1.2fr 1fr; gap:40px; padding:84px 0; align-items:center; }
+    @media(max-width:900px){ .hero .container{ grid-template-columns:1fr; padding:56px 0; } }
+    .hero-bg { position:absolute; inset:-30%; background: radial-gradient(65% 45% at 20% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent), radial-gradient(50% 55% at 80% 60%, color-mix(in srgb, var(--primary) 25%, transparent), transparent); animation: floatBg 12s ease-in-out infinite alternate; filter: blur(40px); opacity:0.7; pointer-events:none; }
+    @keyframes floatBg { to{ transform:translateY(-20px) translateX(10px) scale(1.05); } }
+    .h1 { font-size:clamp(34px,5vw,56px); line-height:1.05; margin-bottom:14px; font-weight:900; letter-spacing:-0.5px; }
+    .lead { font-size:clamp(16px,2.2vw,20px); color:var(--muted); margin-bottom:22px; }
+    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+    .btn-primary { background:linear-gradient(135deg, var(--primary), color-mix(in srgb,var(--primary) 50%,#015aff)); color:#fff; border:none; padding:12px 18px; border-radius:14px; font-weight:800; letter-spacing:0.3px; box-shadow:0 12px 24px rgba(78,159,61,.3); transition:var(--transition); }
+    .btn-primary:hover { transform:translateY(-3px); box-shadow:0 16px 30px rgba(78,159,61,.42); }
+    .btn-ghost { padding:12px 16px; border-radius:14px; border:1px dashed var(--card-border); background:transparent; font-weight:700; transition:var(--transition); }
+    .btn-ghost:hover { background:var(--card); transform:translateY(-2px); }
+
+    /* Sections */
+    section { padding:64px 0; position:relative; }
+    section {
+  scroll-margin-top: 70px;
+}
+    .section-title { font-size:clamp(26px,3.6vw,38px); margin-bottom:12px; font-weight:900; }
+    .section-sub { color:var(--muted); margin-bottom:28px; }
+    .grid-3 { display:flex; flex-wrap:wrap; justify-content:center; gap:35px; }
+    @media(max-width:900px){ .grid-3{ flex-direction:column; gap:24px; } }
+
+    .card { background:var(--card); border:1px solid var(--card-border); border-radius:18px; padding:20px; box-shadow:var(--shadow); transition:var(--transition); cursor:pointer; }
+    .card:hover { transform:translateY(-8px) scale(1.03); box-shadow:0 20px 36px rgba(0,0,0,.12); }
+    .icon { width:36px; height:36px; border-radius:10px; display:grid; place-items:center; margin-bottom:10px; background:linear-gradient(135deg,var(--accent),var(--primary)); font-size:18px; }
+
+    /* About */
+    .about { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+    @media(max-width:900px){ .about{ grid-template-columns:1fr; gap:28px; } }
+    .about-media { padding:18px; background:var(--card); border:1px solid var(--card-border); border-radius:18px; box-shadow:var(--shadow); }
+
+    .badges { display:flex; gap:10px; flex-wrap:wrap; }
+    .badge { padding:8px 12px; border-radius:999px; background:color-mix(in srgb,var(--accent) 28%,transparent); border:1px solid var(--card-border); font-weight:700; }
+
+    
+    /* Testimonials */
+    .carousel { position:relative; overflow:hidden; border-radius:18px; border:1px solid var(--card-border); background:var(--card); box-shadow:var(--shadow); }
+    .track { display:flex; transition:transform 0.6s ease; }
+    .slide { flex:0 0 100%; padding:26px; }
+    .dots { display:flex; justify-content:center; gap:8px; margin-top:12px; }
+    .dot { width:10px; height:10px; border-radius:50%; background:color-mix(in srgb,var(--text) 25%,transparent); border:1px solid var(--card-border); cursor:pointer; transition:var(--transition); }
+    .dot.active { background:var(--primary); transform:scale(1.3); }
+
+    /* Contact */
+    form { display:grid; gap:12px; }
+    .field { display:grid; gap:6px; }
+    .field input, .field textarea { width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--card-border); background:var(--bg); color:var(--text); outline:none; transition:var(--transition); }
+    .field input:focus, .field textarea:focus { box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 20%,transparent); transform:translateY(-1px); }
+
+    /* Footer */
+    footer { border-top:1px solid var(--card-border); padding:26px 0; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+
+    /* Reveal animation */
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.reveal-active { opacity:1; transform:translateY(0); }
+    /* Projects Section */
+#projects .project-card {
+  cursor: pointer;
+  text-align: center;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow);
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+#projects .project-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 36px rgba(0,0,0,.18);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+}
+#projects .project-card .icon {
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  color: #fff;
+  transition: transform .3s ease;
+}
+#projects .project-card:hover .icon {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Project Details Subpage */
+#projectDetails {
+  animation: fadeIn 0.5s ease;
+}
+#projectDetails h2.section-title {
+  margin-bottom: 12px;
+}
+#projectDetails img {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 18px;
+  margin: 20px 0;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+#projectDetails img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 36px rgba(0,0,0,.18);
+}
+#projectDetails ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+#backProjects {
+  transition: transform .2s ease, box-shadow .25s ease;
+}
+#backProjects:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(78,159,61,.3);
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  0% {opacity:0; transform:translateY(20px);}
+  100% {opacity:1; transform:translateY(0);}
+}
+.logooo {
+  width: 85px;
+  height: 85px;
+}
+.logooo:hover{
+  color: black;
+}
+.logoimg {
+    transition: transform 0.35s cubic-bezier(.4,1.4,.6,1), box-shadow 0.35s;
+    border-radius: 18px;
+    box-shadow: 0 0 0 rgba(78,159,61,0);
+    cursor: pointer;
+  }
+  .logoimg:hover {
+    transform: scale(1.09) rotate(-4deg);
+    box-shadow: 0 8px 32px rgba(78,159,61,0.18), 0 2px 8px rgba(0,0,0,0.08);
+    background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  }
+  footer {
+    border-top: 1px solid var(--card-border);
+    padding: 26px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: color-mix(in srgb, var(--card) 80%, var(--bg));
+    font-size: 1.08rem;
+    box-shadow: 0 -2px 24px 0 rgba(78,159,61,0.06);
+  }
+  .footer-social {
+    display: flex;
+    gap: 16px;
+  }
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    color: var(--primary);
+    background: color-mix(in srgb, var(--accent) 10%, var(--card));
+    border: 1px solid var(--card-border);
+    box-shadow: 0 2px 8px rgba(78,159,61,0.07);
+    transition: background 0.22s, color 0.22s, box-shadow 0.22s, transform 0.18s;
+    text-decoration: none;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .footer-social a:hover {
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(78,159,61,0.18);
+    transform: translateY(-2px) scale(1.07);
+  }
+  .footer-social a svg {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    fill: currentColor;
+    transition: fill 0.22s;
+  }
+  /* Contact Form Styling */
+  /* Contact Form Styling */
+#contactForm {
+  max-width: 65%;
+  margin: 40px auto;
+  padding: 36px 38px 30px 38px;
+  background: linear-gradient(120deg, var(--card) 80%, var(--accent) 20%);
+  border-radius: 18px;
+  box-shadow: 0 8px 36px rgba(24,85,250,0.10), 0 2px 12px rgba(0,0,0,0.10);
+  font-family: Arial, sans-serif;
+  border: 2px solid var(--card-border);
+  transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+}
+
+#contactForm .field {
+  margin-bottom: 18px;
+}
+
+#contactForm label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+#contactForm input,
+#contactForm textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1.5px solid var(--card-border);
+  border-radius: 10px;
+  font-size: 15px;
+  background: var(--bg);
+  color: var(--text);
+  transition: border 0.3s, box-shadow 0.3s;
+  font-family: inherit;
+}
+
+#contactForm input:focus,
+#contactForm textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+  outline: none;
+}
+
+#contactForm button {
+  width: 100%;
+  padding: 14px 0;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(24,85,250,0.13);
+  transition: background 0.25s, transform 0.18s, box-shadow 0.25s;
+  letter-spacing: 0.5px;
+}
+
+#contactForm button:hover {
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 28px rgba(24,85,250,0.18);
+}
+
+/* team */
+.team-photo {
+  align-self: center;
+  width:170px;
+  height:170px;
+  border-radius:50%;
+  margin-bottom:18px;
+  object-fit:cover;
+  box-shadow:0 8px 36px rgba(78,159,61,.18);
+  border:5px solid var(--card-border);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  padding:2px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.team-photo:hover {
+  transform: scale(1.08) rotate(3deg);
+  box-shadow:0 16px 46px rgba(0,0,0,.28);
+  border-color: var(--primary);
+}
+.card {
+  padding: 32px 24px;
+  min-width: 260px;
+  font-size: 1.13rem;
+}
+.card h3 {
+  font-size: 1.32rem;
+  margin-bottom: 8px;
+}
+.card div {
+  font-size: 1.08rem;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logooo" ><img src="EVOTECH__final-removebg-preview.png" alt="" ></div>
+        <div class="evologo"><h1 style="color: rgb(2, 175, 255); font-family: 'Times New Roman', Times, serif;font-size: 20px;">EVO <span style="color: #000;"><span style="color: #000;">TECH</span></h1></div>
+      </div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#tech">Technology</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#testimonials">Clients</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="toggle" id="themeToggle" aria-label="Toggle color theme">🌞 / 🌙</button>
+        <a href="#contact" class="cta">Request Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="home" class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div>
+        <h1 class="h1">Turning Ideas Into Actions</h1>
+        <p class="lead">EVOTECH is a forward-thinking <strong>& making more Innovations</strong> based on the problems to be solved, From ideas to impact — EvoTech transforms the problems with visions into real-world solutions. We nurture creativity, build startups, and empower the next generation of change-makers.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#contact">Get Started</a>
+          <a class="btn-ghost" href="#tech">See How It Works</a>
+        </div>
+      </div>
+      <div class="about-media">
+        <!-- Illustration -->
+        <img src="EVOTECH _final.png" alt="" class="logoimg">
+          <rect x="0" y="0" width="640" height="420" rx="18" fill="url(#grad1)" opacity="0.08"/>
+        </svg>
+      </div>
+    </div>
+  </main>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container about">
+      <div>
+        <h2 class="section-title">About</h2>
+        <p class="section-sub">EvoTech turns bold ideas into real-world innovations.
+We empower young minds to create impactful startups.
+From smart farming to sustainable construction, we deliver tech with purpose.
+At EvoTech, we don’t imagine the future — we build it.</p>
+        <div class="badges">
+          <span class="badge">Agri-Tech</span>
+          <span class="badge">Civil Engineering</span>
+          <span class="badge">AI & IoT</span>
+          <span class="badge">Sustainable</span>
+        </div>
+      </div>
+      <div class="about-media reveal">
+        <p style="font-size: 20px; font-weight: bold;">Evo Tech's Solution will make.</p>
+        <ul>
+          <li>Next-Gen Product Development–From concept to market-ready innovation under one roof.</li>
+          <li>Startup Acceleration–Turning prototypes into profitable ventures.</li>
+          <li>Integrated AI & IoT Solutions–Smarter systems for agriculture, infrastructure, and beyond.
+</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team">
+    <div class="container">
+      <h2 class="section-title">Company Visionaries</h2>
+      <p class="section-sub">Shaping the future and driving transformative ideas at Company Visionaries.</p>
+      <div class="grid-3">
+        <div class="card" style="text-align:center">
+          <img src="saroo.jpg" alt="Saravanan C" class="team-photo">
+          <h3>Saravanan C</h3>
+          <div>Founder & CEO</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <img src="swathini.jpg" alt="swathini" class="team-photo">
+          <h3>Swathini</h3>
+          <div>Co-Founder</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <img src="tamil.jpg" alt="Tamilselvan M" class="team-photo">
+          <h3>Tamilselvan M</h3>
+          <div>Co-Founder</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technology -->
+  <section id="tech">
+    <div class="container">
+      <h2 class="section-title">Our Technology</h2>
+      <p class="section-sub">Innovative tools and systems powering agriculture and construction projects.</p>
+      <div class="grid-3">
+        <div class="card reveal">
+          <div class="icon">🌱</div>
+          <h3>Agri tech</h3>
+          <p>Empowering modern agriculture through advanced technology to boost productivity & sustainability.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">🏗️</div>
+          <h3>Civil Engineering</h3>
+          <p>Improving construction high quality with real-time and smart materials tracking systems for efficiency.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">🤖</div>
+          <h3>AI & Automation</h3>
+          <p>Transforming industries through AI-powered insights and seamless automation integration worldwide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section id="benefits">
+    <div class="container">
+      <h2 class="section-title">Why Choose EVOTECH</h2>
+      <p class="section-sub">Reliable, innovative, and sustainable solutions for the Innovative Problems.</p>
+      <div class="grid-3">
+        <div class="card reveal"><h3>Innovation at Core</h3><p>We combine AI, IoT, and advanced engineering to solve real-time problems and encouraging the innovators by collaborations.</p></div>
+        <div class="card reveal"><h3>Multi-Sector Expertise</h3><p>Experience in both agri-tech and civil engineering for integrated solutions.</p></div>
+        <div class="card reveal"><h3>Sustainability</h3><p>We prioritize eco-friendly designs and processes for long-term impact.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+   
+<section id="projects">
+
+  <div id="projects-container" class="feature-cards"></div>
+  <div class="container">
+    <h2 class="section-title">Our Projects</h2>
+    <p class="section-sub">Explore our innovative Agri-Tech and Civil Engineering projects.</p>
+    <div class="grid-3">
+        
+      <div class="card project-card" data-project="project1">
+        <a href="projectt1.html" class="container"> 
+        <div class="icon">🌾</div>
+        <h3>AI based Egg fertility Detection</h3>
+        <p>Instantly identifies fertile eggs using advanced image analysis for higher hatchery efficiency.</p>
+      </div>
+      </a> 
+      <div class="card project-card" data-project="project2">
+         <a href="project2.html" class="container"> 
+        <div class="icon">🏢</div>
+        <h3>Smart Curing Belt</h3>
+        <p>IoT smart belt monitors & controls moisture & temperature for automated,uniform concrete curing.</p>
+      </div>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- Project Details Modal/Subpage -->
+<section id="projectDetails" style="display:none; padding:64px 0; background:var(--bg);">
+  <div class="container">
+    <button id="backProjects" style="margin-bottom:20px; padding:10px 16px; border:none; border-radius:12px; background:var(--primary); color:#fff; cursor:pointer;">← Back to Projects</button>
+    <div id="projectContent"></div>
+  </div>
+</section>
+
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our Clients Say</h2>
+      <div class="carousel reveal" aria-roledescription="carousel">
+        <div class="track" id="carouselTrack">
+          <article class="slide">
+            <p style="font-size:18px; margin-top:0">“EVOTECH’s smart farming system improved our crop yield while reducing water usage.”</p>
+            <p style="color:var(--muted)">— GreenField Agro Farms</p>
+          </article>
+          <article class="slide">
+            <p style="font-size:18px; margin-top:0">“Their civil engineering team delivered our project on time with exceptional quality.”</p>
+            <p style="color:var(--muted)">— Skyline Builders</p>
+          </article>
+          <article class="slide">
+            <p style="font-size:18px; margin-top:0">“From design to deployment, EVOTECH’s technology and service were top-notch.”</p>
+            <p style="color:var(--muted)">— EcoCity Developers</p>
+          </article>
+        </div>
+      </div>
+      <div class="dots" id="carouselDots" aria-label="Select testimonial"></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title" >Contact Us</h2>
+    <form id="contactForm">
+      <div class="field"><label>Name</label><input type="text" name="name" placeholder="Your Name" required></div>
+      <div class="field"><label>Email</label><input type="email" name="email" placeholder="Your Email" required></div>
+      <div class="field"><label>Message</label><textarea name="message" rows="4" placeholder="Your Message" required></textarea></div>
+      <button type="submit" class="btn-primary">Send Message</button>
+  </form>
+  </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+  <p style="font-weight:600;">&copy; 2025 EVOTECH. All rights reserved.</p>
+  <div class="footer-social">
+    <a href="#" title="Twitter">
+      <svg viewBox="0 0 24 24"><path d="M22.46 5.92c-.8.36-1.66.6-2.56.71a4.48 4.48 0 0 0 1.97-2.48 8.93 8.93 0 0 1-2.83 1.08 4.48 4.48 0 0 0-7.63 4.08A12.74 12.74 0 0 1 3.1 4.86a4.48 4.48 0 0 0 1.39 5.98c-.73-.02-1.42-.22-2.02-.56v.06a4.48 4.48 0 0 0 3.6 4.4c-.34.09-.7.14-1.07.14-.26 0-.51-.02-.76-.07a4.48 4.48 0 0 0 4.18 3.11A9 9 0 0 1 2 19.54a12.7 12.7 0 0 0 6.88 2.02c8.26 0 12.78-6.84 12.78-12.78 0-.2 0-.41-.01-.61a9.1 9.1 0 0 0 2.23-2.32z"/></svg>
+      Twitter
+    </a>
+    <a href="https://www.linkedin.com/in/evo-tech-101161380?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" title="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.29c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm15.5 10.29h-3v-4.5c0-1.08-.02-2.47-1.5-2.47s-1.73 1.17-1.73 2.39v4.58h-3v-9h2.89v1.23h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v4.72z"/></svg>
+      LinkedIn
+    </a>
+    <a href="#" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.41a4.92 4.92 0 0 1 1.77 1.02 4.92 4.92 0 0 1 1.02 1.77c.17.46.354 1.26.41 2.43.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.41 2.43a4.92 4.92 0 0 1-1.02 1.77 4.92 4.92 0 0 1-1.77 1.02c-.46.17-1.26.354-2.43.41-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.41a4.92 4.92 0 0 1-1.77-1.02 4.92 4.92 0 0 1-1.02-1.77c-.17-.46-.354-1.26-.41-2.43C2.212 15.784 2.2 15.4 2.2 12s.012-3.584.07-4.85c.056-1.17.24-1.97.41-2.43a4.92 4.92 0 0 1 1.02-1.77 4.92 4.92 0 0 1 1.77-1.02c.46-.17 1.26-.354 2.43-.41C8.416 2.212 8.8 2.2 12 2.2zm0-2.2C8.736 0 8.332.012 7.052.07c-1.28.058-2.16.25-2.91.53a7.07 7.07 0 0 0-2.56 1.64A7.07 7.07 0 0 0 .6 4.142c-.28.75-.472 1.63-.53 2.91C.012 8.332 0 8.736 0 12c0 3.264.012 3.668.07 4.948.058 1.28.25 2.16.53 2.91a7.07 7.07 0 0 0 1.64 2.56 7.07 7.07 0 0 0 2.56 1.64c.75.28 1.63.472 2.91.53C8.332 23.988 8.736 24 12 24s3.668-.012 4.948-.07c1.28-.058 2.16-.25 2.91-.53a7.07 7.07 0 0 0 2.56-1.64 7.07 7.07 0 0 0 1.64-2.56c.28-.75.472-1.63.53-2.91.058-1.28.07-1.684.07-4.948 0-3.264-.012-3.668-.07-4.948-.058-1.28-.25-2.16-.53-2.91a7.07 7.07 0 0 0-1.64-2.56A7.07 7.07 0 0 0 19.858.6c-.75-.28-1.63-.472-2.91-.53C15.668.012 15.264 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm7.844-10.406a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0z"/></svg>
+      Instagram
+    </a>
+  </div>
+</footer>
+
+  <!-- JS -->
+  <script>
+    // Theme Toggle
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      document.documentElement.dataset.theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){ entry.target.classList.add('reveal-active'); }
+      });
+    }, { threshold:0.2 });
+    reveals.forEach(r=>revealObserver.observe(r));
+
+    // Carousel
+    const track = document.getElementById('carouselTrack');
+    const slides = track.children;
+    const dotsContainer = document.getElementById('carouselDots');
+    let currentIndex = 0;
+
+    const createDots = ()=>{
+      for(let i=0;i<slides.length;i++){
+        const dot=document.createElement('div'); dot.classList.add('dot'); if(i===0) dot.classList.add('active'); dot.addEventListener('click',()=>goToSlide(i)); dotsContainer.appendChild(dot);
+      }
+    }
+    const goToSlide = (index)=>{
+      track.style.transform=`translateX(-${index*100}%)`;
+      currentIndex=index;
+      Array.from(dotsContainer.children).forEach((d,i)=>d.classList.toggle('active',i===index));
+    }
+    createDots();
+    setInterval(()=>{ goToSlide((currentIndex+1)%slides.length); },6000);
+
+    // Project click logic
+const projectCards = document.querySelectorAll('.project-card');
+const projectsSection = document.getElementById('projects');
+const projectDetailsSection = document.getElementById('projectDetails');
+const projectContent = document.getElementById('projectContent');
+const backBtn = document.getElementById('backProjects');
+
+const projectsData = {
+  project1: {
+    title: "Smart Farming AI",
+    desc: "AI-powered system to predict crop yield, monitor soil and irrigation conditions, and optimize farm operations.",
+    features: [
+      "Real-time soil and crop monitoring",
+      "Automated irrigation recommendations",
+      "AI-based crop yield prediction",
+      "IoT-enabled sensor integration"
+    ],
+    image: "https://via.placeholder.com/600x300?text=Smart+Farming+AI"
+  },
+  project2: {
+    title: "Eco Civil Design",
+    desc: "Sustainable civil engineering solutions for modern infrastructure, focusing on eco-friendly construction practices.",
+    features: [
+      "Green building design",
+      "Energy-efficient material selection",
+      "Real-time project monitoring",
+      "Eco-conscious construction planning"
+    ],
+    image: "https://via.placeholder.com/600x300?text=Eco+Civil+Design"
+  }
+};
+
+projectCards.forEach(card => {
+  card.addEventListener('click', () => {
+    const projectKey = card.dataset.project;
+    const data = projectsData[projectKey];
+    if(data){
+      projectContent.innerHTML = `
+        <h2 class="section-title">${data.title}</h2>
+        <img src="${data.image}" alt="${data.title}" style="border-radius:18px; margin:20px 0;">
+        <p style="margin-bottom:12px;">${data.desc}</p>
+        <ul>${data.features.map(f => `<li>${f}</li>`).join('')}</ul>
+      `;
+      projectsSection.style.display = "none";
+      projectDetailsSection.style.display = "block";
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  });
+});
+
+backBtn.addEventListener('click', () => {
+  projectDetailsSection.style.display = "none";
+  projectsSection.style.display = "block";
+});
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const formData = {
+    name: this.name.value,
+    email: this.email.value,
+    message: this.message.value
+  };
+
+  let res = await fetch("http://localhost:5000/submit_website1", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData)
+  });
+
+  let result = await res.json();
+  alert(result.message);
+  this.reset();
+});
+  </script>
+</body>
+</html>

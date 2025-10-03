@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EVOTECH — Egg Fertility Prediction</title>
+  <meta name="description" content="EVOTECH: AI-based Egg Fertility Prediction System using day-3 candling. Ethical, efficient poultry farming." />
+  <link rel="stylesheet" href="">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1E1E1E;
+      --muted: #5a5a5a;
+      --primary: #4E9F3D;
+      --accent: #FFC947;
+      --card: #f6f7f8;
+      --card-border: #e8eaed;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    [data-theme="dark"]{
+      --bg: #121212;
+      --text: #F5F5F5;
+      --muted: #c9c9c9;
+      --primary: #4E9F3D;
+      --accent: #FFC947;
+      --card: #1c1c1c;
+      --card-border: #2a2a2a;
+      --shadow: 0 10px 30px rgba(0,0,0,.5);
+    }
+    .evologo {
+        color: lightskyblue;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .techlogo {
+        color: black;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; background: var(--bg); color: var(--text); }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1200px, 92%); margin: 0 auto; }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: 100; backdrop-filter: saturate(180%) blur(10px); background: color-mix(in srgb, var(--bg) 86%, transparent); border-bottom: 1px solid var(--card-border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .5px; }
+    .brand-badge { width: 36px; height: 36px; border-radius: 12px; font-weight: 900; }
+
+    .nav-links { display: flex; gap: 22px; align-items: center; }
+    .nav-links a { position: relative; padding: 6px 2px; font-weight: 600; }
+    .nav-links a::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: all .25s ease; transform: translateX(-50%); }
+    .nav-links a:hover::after { width: 90%; }
+
+    .cta { padding: 10px 16px; border-radius: 14px; border: 1px solid var(--card-border); background: var(--bg); font-weight: 700; transition: transform .15s ease, box-shadow .25s ease; }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(78,159,61,.25); }
+
+    .toggle { border: 1px solid var(--card-border); background: var(--card); padding: 8px 12px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; }
+
+    /* Hero */
+    .hero { position: relative; overflow: hidden; }
+    .hero .container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding: 84px 0; align-items: center; }
+    @media (max-width: 900px){ .hero .container{ grid-template-columns: 1fr; padding: 56px 0; } }
+
+    .hero-bg { position: absolute; inset: -30%; background: radial-gradient(65% 45% at 20% 20%, color-mix(in srgb, var(--accent) 22%, transparent), transparent), radial-gradient(50% 55% at 80% 60%, color-mix(in srgb, var(--primary) 25%, transparent), transparent); animation: floatBg 12s ease-in-out infinite alternate; filter: blur(40px); opacity: .7; pointer-events: none; }
+    @keyframes floatBg { to { transform: translateY(-20px) translateX(10px) scale(1.05); } }
+
+    .h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; margin: 0 0 14px; font-weight: 900; letter-spacing: -.5px; }
+    .lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); margin-bottom: 22px; }
+    .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 50%, #2b6b21)); color: #fff; border: none; padding: 12px 18px; border-radius: 14px; font-weight: 800; letter-spacing: .3px; box-shadow: 0 12px 24px rgba(78,159,61,.3); transition: transform .15s ease, box-shadow .25s ease; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(78,159,61,.42); }
+    .btn-ghost { padding: 12px 16px; border-radius: 14px; border: 1px dashed var(--card-border); background: transparent; font-weight: 700; }
+
+    /* Sections */
+    section { padding: 64px 0; position: relative; }
+    .section-title { font-size: clamp(26px, 3.6vw, 38px); margin: 0 0 12px; font-weight: 900; }
+    .section-sub { color: var(--muted); margin: 0 0 28px; }
+
+    .grid-3 { display: flex;flex-wrap: wrap; justify-content: center; gap: 35px; }
+    @media (max-width: 900px){ .grid-3{ grid-template-columns: 1fr; } }
+
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .3s ease, background .3s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 20px 36px rgba(0,0,0,.12); }
+    .icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 10px; background: linear-gradient(135deg, var(--accent), var(--primary)); }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: px; align-items: center; }
+    @media (max-width: 900px){ .about{ grid-template-columns: 1fr; } }
+    .about-media { padding: 18px; background: var(--card); border: 1px solid var(--card-border); border-radius: 18px; box-shadow: var(--shadow); }
+
+    /* Benefits badges */
+    .badges { display: flex; gap: 10px; flex-wrap: wrap; }
+    .badge { padding: 8px 12px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 28%, transparent); border: 1px solid var(--card-border); font-weight: 700; }
+
+    /* Testimonials */
+    .carousel { position: relative; overflow: hidden; border-radius: 18px; border: 1px solid var(--card-border); background: var(--card); box-shadow: var(--shadow); }
+    .track { display: flex; transition: transform .6s ease; }
+    .slide { flex: 0 0 100%; padding: 26px; }
+    .dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--text) 25%, transparent); border: 1px solid var(--card-border); cursor: pointer; }
+    .dot.active { background: var(--primary); }
+
+    /* Contact */
+    form { display: grid; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    .field input, .field textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--card-border); background: var(--bg); color: var(--text); outline: none; transition: box-shadow .2s ease, transform .1s ease; }
+    .field input:focus, .field textarea:focus { box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent); transform: translateY(-1px); }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--card-border); padding: 26px 0; }
+    .socials { display: flex; gap: 12px; }
+    .socials a { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; border: 1px solid var(--card-border); transition: transform .2s, background .2s; }
+    .socials a:hover { transform: translateY(-3px) rotate(-2deg); background: var(--card); }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.reveal-active { opacity: 1; transform: translateY(0); }
+
+    /* Smooth scroll */
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+  <header>
+  <div class="container nav">
+    <div class="brand">
+      <div class="brand-badge">
+        <!-- Logo SVG start -->
+        <img src="logo (1).png" alt="EVOTECH Logo" style="width:30 px; height:30 px; border-radius:6px; vertical-align:middle;">
+        <!-- Logo SVG end -->
+      </div>
+      <div class="evologo">EVOTECH</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#tech">Technology</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button class="toggle" id="themeToggle" aria-label="Toggle color theme">🌞 / 🌙</button>
+      <a href="#contact" class="cta">Request Demo</a>
+    </div>
+  </div>
+</header>
+
+  <main id="home" class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div>
+        <h1 class="h1">Shaping the Future of Poultry Farming</h1>
+        <p class="lead">EVOTECH’s AI-based <strong>Egg Fertility Prediction System</strong> scans chicken eggs on day 3 using candling technology—enabling ethical, efficient, and data‑driven hatcheries.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#contact">Get Started</a>
+          <a class="btn-ghost" href="#tech">See How It Works</a>
+        </div>
+      </div>
+      <div class="about-media">
+        <!-- Inline SVG illustration of candling setup -->
+        <svg viewBox="0 0 640 420" role="img" aria-label="Candling setup illustration" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFC947"/>
+              <stop offset="1" stop-color="#4E9F3D"/>
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <rect x="0" y="0" width="640" height="420" rx="18" fill="url(#g1)" opacity="0.08"/>
+          <rect x="120" y="90" width="400" height="190" rx="16" fill="#202225" opacity="0.25"/>
+          <rect x="135" y="105" width="370" height="160" rx="14" fill="#2a2d2f" opacity="0.35"/>
+          <ellipse cx="210" cy="240" rx="40" ry="55" fill="#ffe6a3" />
+          <ellipse cx="210" cy="240" rx="38" ry="52" fill="#ffd76b" filter="url(#glow)" />
+          <rect x="310" y="130" width="170" height="110" rx="10" fill="#111"/>
+          <circle cx="335" cy="185" r="8" fill="#4E9F3D"/>
+          <rect x="350" y="170" width="110" height="30" rx="6" fill="#FFC947"/>
+          <text x="140" y="300" font-family="monospace" font-size="16" fill="currentColor">AI Scanner • Day-3 Candling • Real-time</text>
+        </svg>
+      </div>
+    </div>
+  </main>
+
+<section id="team">
+    <div class="container">
+      <h2 class="section-title">Meet the Team</h2>
+      <p class="section-sub">Passionate minds behind EVOTECH's innovation.</p>
+      <div class="grid-3">
+        <div class="card reveal" style="text-align:center">
+          <img src="https://ui-avatars.com/api/?name=Ananya+Rao&background=4E9F3D&color=fff&size=96" alt="Ananya Rao" style="border-radius:50%; width:80px; margin-bottom:10px;">
+          <h3 style="margin-bottom:4px">Saravanan C</h3>
+          <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Founder</div>
+          <p style="font-size:15px">Agri-tech innovator, deep learning specialist, and poultry enthusiast.</p>
+        </div>
+        <div class="card reveal" style="text-align:center">
+          <img src="https://ui-avatars.com/api/?name=Vikram+S&background=FFC947&color=222&size=96" alt="Vikram S" style="border-radius:50%; width:80px; margin-bottom:10px;">
+          <h3 style="margin-bottom:4px">Tamilselvan M</h3>
+          <div style="color:var(--muted); font-size:15px; margin-bottom:8px">AIML Engineer & Lead</div>
+          <p style="font-size:15px">Embedded systems, device design, and field deployment expert.</p>
+        </div>
+        <div class="card reveal" style="text-align:center">
+          <img src="https://ui-avatars.com/api/?name=Priya+Menon&background=2a2d2f&color=fff&size=96" alt="Priya Menon" style="border-radius:50%; width:80px; margin-bottom:10px;">
+          <h3 style="margin-bottom:4px">Shajan Krishnan A D</h3>
+          <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Hardware Engineer & Lead</div>
+          <p style="font-size:15px">User experience, partner success, and ethical farming advocate.</p>
+        </div>
+         <div class="card reveal" style="text-align:center">
+          <img src="https://ui-avatars.com/api/?name=Ananya+Rao&background=4E9F3D&color=fff&size=96" alt="Ananya Rao" style="border-radius:50%; width:80px; margin-bottom:10px;">
+          <h3 style="margin-bottom:4px">Pradees N</h3>
+          <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Designer & Tech Assist</div>
+          <p style="font-size:15px">Agri-tech innovator, deep learning specialist, and poultry enthusiast.</p>
+        </div>
+         <div class="card reveal" style="text-align:center">
+          <img src="https://ui-avatars.com/api/?name=Ananya+Rao&background=4E9F3D&color=fff&size=96" alt="Ananya Rao" style="border-radius:50%; width:80px; margin-bottom:10px;">
+          <h3 style="margin-bottom:4px">Divya D</h3>
+          <div style="color:var(--muted); font-size:15px; margin-bottom:8px">Product & Outreach</div>
+          <p style="font-size:15px">Agri-tech innovator, deep learning specialist, and poultry enthusiast.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container about">
+      <div>
+        <h2 class="section-title">About EVOTECH</h2>
+        <p class="section-sub">We build intelligent agri-tech solutions that make poultry farming more ethical and more profitable. Our focus: early, accurate egg fertility detection using computer vision.</p>
+        <div class="badges">
+          <span class="badge">Ethical First</span>
+          <span class="badge">AI + Vision</span>
+          <span class="badge">Real-time</span>
+          <span class="badge">Scalable</span>
+        </div>
+      </div>
+      <div class="about-media reveal">
+        <p style="margin-top:0">Our system analyzes candling images taken on day 3 and classifies eggs as fertile or unfertile with confidence scores, enabling informed decisions before incubation continues.</p>
+        <ul>
+          <li>Batch or single-egg scanning</li>
+          <li>Lightweight on-device inference</li>
+          <li>Simple dashboard and CSV export</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="tech">
+    <div class="container">
+      <h2 class="section-title">Our Technology</h2>
+      <p class="section-sub">How AI + candling work together in a fast, reliable pipeline.</p>
+      <div class="grid-3">
+        <div class="card reveal">
+          <div class="icon">🔦</div>
+          <h3>High-contrast Candling</h3>
+          <p>Uniform LED backlight reveals vascular patterns without heating the egg.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">🤖</div>
+          <h3>On-device AI</h3>
+          <p>Optimized CNN model performs classification in ~1–2 seconds per egg.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon">📊</div>
+          <h3>Actionable Output</h3>
+          <p>Confidence score, batch summaries, and exportable reports for farm ops.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits">
+    <div class="container">
+      <h2 class="section-title">Benefits</h2>
+      <p class="section-sub">Better outcomes for farmers, animals, and the environment.</p>
+      <div class="grid-3">
+        <div class="card reveal"><h3>Ethical decisions early</h3><p>Identify non-viable eggs by day 3 to reduce late-stage culling.</p></div>
+        <div class="card reveal"><h3>Higher hatch rates</h3><p>Focus incubation resources on fertile eggs for improved yield.</p></div>
+        <div class="card reveal"><h3>Lower costs</h3><p>Save energy and labor with faster sorting and clear dashboards.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Partners Say</h2>
+      <div class="carousel reveal" aria-roledescription="carousel">
+        <div class="track" id="carouselTrack">
+          <article class="slide">
+            <p style="font-size:18px; margin-top:0">“EVOTECH helped us sort eggs earlier and save on incubation energy.”</p>
+            <p style="color:var(--muted)">— Lakshmi Farms, Namakkal</p>
+          </article>
+          <article class="slide">
+            <p style="font-size:18px; margin-top:0">“Fast setup, accurate predictions, and great support from the team.”</p>
+            <p style="color:var(--muted)">— GreenNest Hatcheries</p>
+          </article>
+          <article class="slide">
+            <p style="font-size:18px; margin-top:0">“Finally a practical, ethical approach to fertility detection.”</p>
+            <p style="color:var(--muted)">— Saro Poultry Collective</p>
+          </article>
+        </div>
+      </div>
+      <div class="dots" id="carouselDots" aria-label="Select testimonial"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact Us</h2>
+      <p class="section-sub">Tell us about your hatchery. We’ll get back within 1 business day.</p>
+      <div class="about">
+        <form class="reveal" onsubmit="event.preventDefault(); alert('Thanks! We\'ll reach out shortly.'); this.reset();">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" required placeholder="Your full name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" required placeholder="name@company.com" />
+          </div>
+          <div class="field">
+            <label for="msg">Message</label>
+            <textarea id="msg" rows="5" required placeholder="Tell us about your needs…"></textarea>
+          </div>
+          <button class="btn-primary" type="submit">Request a Demo</button>
+        </form>
+        <div class="about-media reveal">
+          <iframe title="Map" width="100%" height="320" style="border:0; border-radius:12px" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.999999!2d79.000000!3d12.900000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sEVOTECH!5e0!3m2!1sen!2sin!4v0000000000">
+          </iframe>
+          <div style="display:flex; gap:12px; margin-top:12px" class="socials">
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Twitter">𝕏</a>
+            <a href="#" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="brand-badge">E</div>
+        <div><strong>EVOTECH</strong> • Ethical AI for Poultry</div>
+      </div>
+      <div style="color:var(--muted)">© <span id="year"></span> EVOTECH. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme persistence
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('evotech-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = saved || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initial);
+    themeToggle.textContent = initial === 'dark' ? '🌙 Dark' : '🌞 Light';
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('evotech-theme', next);
+      themeToggle.textContent = next === 'dark' ? '🌙 Dark' : '🌞 Light';
+    });
+
+    // Reveal on scroll (IntersectionObserver)
+    const revealEls = document.querySelectorAll('.reveal, .card');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('reveal-active'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el=> io.observe(el));
+
+    // Testimonials carousel
+    const track = document.getElementById('carouselTrack');
+    const slides = Array.from(track.children);
+    const dotsWrap = document.getElementById('carouselDots');
+    let idx = 0; let timer;
+
+    function renderDots(){
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i)=>{
+        const d = document.createElement('button');
+        d.className = 'dot' + (i===idx ? ' active' : '');
+        d.setAttribute('aria-label', 'Go to slide ' + (i+1));
+        d.addEventListener('click', ()=>{ idx = i; update(); resetAuto(); });
+        dotsWrap.appendChild(d);
+      });
+    }
+
+    function update(){
+      track.style.transform = `translateX(-${idx*100}%)`;
+      [...dotsWrap.children].forEach((d,i)=> d.classList.toggle('active', i===idx));
+    }
+
+    function next(){ idx = (idx + 1) % slides.length; update(); }
+    function resetAuto(){ clearInterval(timer); timer = setInterval(next, 5000); }
+
+    renderDots(); update(); resetAuto();
+
+    // Accessibility: pause on hover
+    track.parentElement.addEventListener('mouseenter', ()=> clearInterval(timer));
+    track.parentElement.addEventListener('mouseleave', resetAuto);
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
